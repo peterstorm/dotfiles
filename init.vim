@@ -157,6 +157,9 @@ inoremap <C-d> <esc>ddi
 " Uppercase word under cursor in normal mode
 nnoremap <C-u> viwU
 
+" Surround a word in quoutes
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+
 " }}}
 
 "Haskell Specific {{{
