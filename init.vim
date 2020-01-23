@@ -145,11 +145,17 @@ nnoremap <leader>mo :set mouse=<cr>
 " Default to mouse mode on
 set mouse=a
 
-" Disable the use of escape
-inoremap <esc> <nop>
-
 " Use jk as escape
 inoremap jk <esc>
+
+" Use <space> to select word under curser in normal mode
+nnoremap <space> viw
+
+" Delete line with <CTRL-d> in insert mode
+inoremap <C-d> <esc>ddi
+
+" Uppercase word under cursor in normal mode
+nnoremap <C-u> viwU
 
 " }}}
 
