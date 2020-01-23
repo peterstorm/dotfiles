@@ -145,6 +145,12 @@ nnoremap <leader>mo :set mouse=<cr>
 " Default to mouse mode on
 set mouse=a
 
+" Disable the use of escape
+inoremap <esc> <nop>
+
+" Use jk as escape
+inoremap jk <esc>
+
 " }}}
 
 "Haskell Specific {{{
