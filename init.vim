@@ -30,6 +30,10 @@ Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'machakann/vim-sandwich'
 
+Plug 'yuezk/vim-js' 
+
+Plug 'maxmellon/vim-jsx-pretty'
+
 call plug#end()
 " }}}
 
@@ -158,6 +162,27 @@ inoremap <C-d> <esc>ddi
 
 " Uppercase word under cursor in normal mode
 nnoremap <C-u> viwU
+
+" Operator pending command to use with d or c to change the contents of a parentheses
+onoremap p i(
+
+" Operator pending command to use with d or c to delete the body of a function until return or pure (Haskell)
+onoremap b /return<cr>
+
+" Operator pending command to use with d or c to change the contents of the next parentheses
+onoremap in( :<c-u>normal! f(vi(<cr>
+
+" Operator pending command to use with d or c to change the contents of the last (previeous) parentheses
+onoremap il( :<c-u>normal! F)vi(<cr>
+
+" Operator pending command to use with d or c to change the contents of the next bracket
+onoremap in{ :<c-u>normal! f{vi{<cr>
+
+" Operator pending command to use with d or c to change the contents of the last (previeous) bracket
+onoremap il{ :<c-u>normal! F}vi{<cr>
+
+"  pending command to use with d or c to change the contents of the next string
+onoremap in" :<c-u>normal! f"vi"<cr>
 
 " }}}
 
@@ -435,7 +460,7 @@ augroup last_edit
   autocmd BufReadPost *
        \ if line("'\"") > 0 && line("'\"") <= line("$") |
        \   exe "normal! g`\"" |
-       \ endif
+       \ endi
 augroup END
 " Remember info about open buffers on close
 set viminfo^=%
@@ -445,6 +470,7 @@ nmap <leader>sh :leftabove  vnew<CR>
 nmap <leader>sl :rightbelow vnew<CR>
 nmap <leader>sk :leftabove  new<CR>
 nmap <leader>sj :rightbelow new<CR>
+nmap <leader>s :vsplit<CR>
 
 " Manually create key mappings (to avoid rebinding C-\)
 "let g:tmux_navigator_no_mappings = 1
@@ -466,9 +492,6 @@ nnoremap <leader>bo <c-w>o
 
 " delete buffer without closing pane
 noremap <leader>bd :bd<cr>
-
-" fuzzy find buffers
-noremap <leader>b<space> :CtrlPBuffer<cr>
 
 " Neovim terminal configurations
 if has('nvim')
