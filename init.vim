@@ -34,6 +34,8 @@ Plug 'yuezk/vim-js'
 
 Plug 'maxmellon/vim-jsx-pretty'
 
+Plug 'elmcast/elm-vim'
+
 call plug#end()
 " }}}
 
@@ -189,9 +191,9 @@ onoremap in" :<c-u>normal! f"vi"<cr>
 "Haskell Specific {{{
 
 " run ghcid on current file
-nnoremap <leader>g :Ghcid <C-R>=expand('%')<cr><cr>
+nnoremap <leader>ghc :Ghcid <C-R>=expand('%')<cr><cr>
 
-nnoremap <leader>k :GhcidKill<cr>
+nnoremap <leader>kghc :GhcidKill<cr>
 " }}}
 
 " vim-jupyter Specific {{{
@@ -203,6 +205,21 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 let g:airline#extensions#coc#enabled = 1
 " }}}
 

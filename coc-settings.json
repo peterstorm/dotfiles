@@ -3,5 +3,16 @@
   "signature.target": "echo",
   "suggest.floatEnable": true,
   "coc.preferences.hoverTarget": "echo",
-  "emmet.includeLanguages": {"javascript": "javascriptreact"}
+  "emmet.includeLanguages": {"javascript": "javascriptreact"},
+  "languageserver": {
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"],
+      "initializationOptions": {
+        "elmAnalyseTrigger": "change"
+      }
+    }
+  },
+  "codeLens.enable": true
 }
