@@ -24,8 +24,6 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'pbrisbin/vim-syntax-shakespeare'
 
-Plug 'szymonmaszke/vimpyter'
-
 Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'machakann/vim-sandwich'
@@ -35,6 +33,8 @@ Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 
 Plug 'elmcast/elm-vim'
+
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 " }}}
@@ -196,10 +196,6 @@ nnoremap <leader>ghc :Ghcid <C-R>=expand('%')<cr><cr>
 nnoremap <leader>kghc :GhcidKill<cr>
 " }}}
 
-" vim-jupyter Specific {{{
-autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
-" }}}
-
 " coc.nvim specific config {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -341,6 +337,15 @@ function! s:denite_my_settings() abort
   \ denite#do_map('open_filter_buffer')
 endfunction
 
+" }}}
+
+" vim-fugitive specific config {{{
+
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
 " }}}
 
 " Colors and Fonts {{{
