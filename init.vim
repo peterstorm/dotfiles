@@ -4,6 +4,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovimhaskell/haskell-vim'
 
+Plug 'derekwyatt/vim-scala'
+
 Plug 'jelera/vim-javascript-syntax'
 
 Plug 'Shougo/denite.nvim'
@@ -35,6 +37,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'elmcast/elm-vim'
 
 Plug 'tpope/vim-fugitive'
+
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 " }}}
@@ -99,6 +103,7 @@ endif
 " Always show current position
 set ruler
 set number
+set relativenumber
 
 " Show trailing whitespace
 set list
@@ -196,6 +201,11 @@ nnoremap <leader>ghc :Ghcid <C-R>=expand('%')<cr><cr>
 nnoremap <leader>kghc :GhcidKill<cr>
 " }}}
 
+" vim-sneak specific config {{{
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+"}}}
+
 " coc.nvim specific config {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -212,7 +222,7 @@ endif
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
@@ -292,7 +302,7 @@ catch
   echo 'Denite not installed. It should work after running :PlugInstall'
 endtry
 
-nmap ; :Denite buffer<CR>
+nmap <leader>. :Denite buffer<CR>
 nmap <leader>t :DeniteProjectDir file/rec<CR>
 nnoremap <leader>r :<C-u>Denite grep:. -no-empty<CR>
 nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
