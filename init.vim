@@ -159,6 +159,7 @@ nnoremap <leader>mo :set mouse=<cr>
 set mouse=a
 
 " Use jk as escape
+xnoremap jk <esc>
 inoremap jk <esc>
 
 " Use spaces instead of tabs
