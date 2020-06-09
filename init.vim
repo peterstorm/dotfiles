@@ -161,35 +161,30 @@ set mouse=a
 " Use jk as escape
 inoremap jk <esc>
 
-" Use <space> to select word under curser in normal mode
-nnoremap <space> viw
+" Use spaces instead of tabs
+set expandtab
 
-" Delete line with <CTRL-d> in insert mode
-inoremap <C-d> <esc>ddi
+" 1 tab == 2 spaces, unless the file is already
+" using tabs, in which case tabs will be inserted.
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
-" Uppercase word under cursor in normal mode
-nnoremap <C-u> viwU
+" Linebreak on 500 characters
+set lbr
+set tw=500
 
-" Operator pending command to use with d or c to change the contents of a parentheses
-onoremap p i(
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
 
-" Operator pending command to use with d or c to delete the body of a function until return or pure (Haskell)
-onoremap b /return<cr>
-
-" Operator pending command to use with d or c to change the contents of the next parentheses
-onoremap in( :<c-u>normal! f(vi(<cr>
-
-" Operator pending command to use with d or c to change the contents of the last (previeous) parentheses
-onoremap il( :<c-u>normal! F)vi(<cr>
-
-" Operator pending command to use with d or c to change the contents of the next bracket
-onoremap in{ :<c-u>normal! f{vi{<cr>
-
-" Operator pending command to use with d or c to change the contents of the last (previeous) bracket
-onoremap il{ :<c-u>normal! F}vi{<cr>
-
-"  pending command to use with d or c to change the contents of the next string
-onoremap in" :<c-u>normal! f"vi"<cr>
+" Copy and paste to os clipboard
+nmap <leader>y "*y
+vmap <leader>y "*y
+nmap <leader>d "*d
+vmap <leader>d "*d
+nmap <leader>p "*p
+vmap <leader>p "*p
 
 " }}}
 
@@ -200,11 +195,6 @@ nnoremap <leader>ghc :Ghcid <C-R>=expand('%')<cr><cr>
 
 nnoremap <leader>kghc :GhcidKill<cr>
 " }}}
-
-" vim-sneak specific config {{{
-map f <Plug>Sneak_s
-map F <Plug>Sneak_S
-"}}}
 
 " coc.nvim specific config {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -405,7 +395,6 @@ set gfn=Monaco:h19
 
 " }}}
 
-
 " Files, backups and undo {{{
 
 " Turn backup off, since most stuff is in Git anyway...
@@ -431,34 +420,6 @@ nmap <leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
 
 " Show undo tree
 nmap <silent> <leader>u :MundoToggle<CR>
-
-" }}}
-
-
-" Use spaces instead of tabs
-set expandtab
-
-" 1 tab == 2 spaces, unless the file is already
-" using tabs, in which case tabs will be inserted.
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
-
-" Copy and paste to os clipboard
-nmap <leader>y "*y
-vmap <leader>y "*y
-nmap <leader>d "*d
-vmap <leader>d "*d
-nmap <leader>p "*p
-vmap <leader>p "*p
 
 " }}}
 
