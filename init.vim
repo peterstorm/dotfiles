@@ -28,7 +28,7 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 
 Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'machakann/vim-sandwich'
+Plug 'tpope/vim-surround'
 
 Plug 'yuezk/vim-js' 
 
