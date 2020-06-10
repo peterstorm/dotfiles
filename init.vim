@@ -28,8 +28,6 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 
 Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'tpope/vim-surround'
-
 Plug 'yuezk/vim-js' 
 
 Plug 'maxmellon/vim-jsx-pretty'
@@ -39,6 +37,8 @@ Plug 'elmcast/elm-vim'
 Plug 'tpope/vim-fugitive'
 
 Plug 'justinmk/vim-sneak'
+
+Plug 'tpope/vim-surround'
 
 call plug#end()
 " }}}
