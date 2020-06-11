@@ -342,7 +342,6 @@ endfunction
 
 " vim-fugitive specific config {{{
 
-nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Git branch<Space>
