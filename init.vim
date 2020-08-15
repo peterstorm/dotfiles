@@ -294,9 +294,9 @@ catch
 endtry
 
 nmap <leader>. :Denite buffer<CR>
-nmap <leader>t :DeniteProjectDir file/rec<CR>
-nnoremap <leader>r :<C-u>Denite grep:. -no-empty<CR>
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
+nmap <leader>dt :DeniteProjectDir file/rec<CR>
+nnoremap <leader>dg :<C-u>Denite grep:. -no-empty<CR>
+nnoremap <leader>dw :<C-u>DeniteCursorWord grep:.<CR>
 
 " Define mappings while in 'filter' mode
 "   <C-o>         - Switch to normal mode inside of search results
@@ -459,11 +459,14 @@ augroup END
 set viminfo^=%
 
 " Open window splits in various places
-nmap <leader>sh :leftabove  vnew<CR>
-nmap <leader>sl :rightbelow vnew<CR>
-nmap <leader>sk :leftabove  new<CR>
-nmap <leader>sj :rightbelow new<CR>
-nmap <leader>s :vsplit<CR>
+nmap <leader>wwh :leftabove  vnew<CR>
+nmap <leader>wl :rightbelow vnew<CR>
+nmap <leader>wk :leftabove  new<CR>
+nmap <leader>wj :rightbelow new<CR>
+nmap <leader>ws :vsplit<CR>
+
+" close current window
+nnoremap <leader>wc <c-w>c
 
 " Manually create key mappings (to avoid rebinding C-\)
 "let g:tmux_navigator_no_mappings = 1
@@ -482,9 +485,6 @@ nnoremap <leader>bn :bn<cr>
 
 " close every window in current tabview but the current
 nnoremap <leader>bo <c-w>o
-
-" close current window
-nnoremap <leader>bc <c-w>c
 
 " delete buffer without closing pane
 noremap <leader>bd :bd<cr>
