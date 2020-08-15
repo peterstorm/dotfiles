@@ -466,7 +466,7 @@ nmap <leader>wj :rightbelow new<CR>
 nmap <leader>ws :vsplit<CR>
 
 " close current window
-nnoremap <leader>wc <c-w>c
+nnoremap <leader>wbc <c-w>c
 
 " Manually create key mappings (to avoid rebinding C-\)
 "let g:tmux_navigator_no_mappings = 1
