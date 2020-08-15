@@ -483,6 +483,9 @@ nnoremap <leader>bn :bn<cr>
 " close every window in current tabview but the current
 nnoremap <leader>bo <c-w>o
 
+" close current window
+nnoremap <leader>bc <c-w>c
+
 " delete buffer without closing pane
 noremap <leader>bd :bd<cr>
 
