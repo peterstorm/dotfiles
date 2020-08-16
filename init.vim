@@ -187,6 +187,9 @@ vmap <leader>d "*d
 nmap <leader>p "*p
 vmap <leader>p "*p
 
+" change all occurances of word under cursor
+nnoremap <Leader>so :%s/\<<C-r><C-w>\>//g<Left><Left>
+
 " }}}
 
 "Haskell Specific {{{
