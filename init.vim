@@ -190,6 +190,9 @@ vmap <leader>p "*p
 " change all occurances of word under cursor
 nnoremap <Leader>so :%s/\<<C-r><C-w>\>//g<Left><Left>
 
+" change some occurances of word under cursor, search again with '/ CTRL-R - then use n and . to redo changes'.
+nnoremap <leader>cso :s/<c-r><c-w>
+
 " }}}
 
 "Haskell Specific {{{
