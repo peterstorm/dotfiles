@@ -565,6 +565,11 @@ nmap <leader>ws :vsplit<CR>
 " close current window
 nnoremap <leader>wc <c-w>c
 
+" change horizontal size of split
+nnoremap <silent> > <C-w><
+nnoremap <silent> < <C-w>>
+
+
 " Manually create key mappings (to avoid rebinding C-\)
 "let g:tmux_navigator_no_mappings = 1
 
