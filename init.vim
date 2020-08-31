@@ -40,6 +40,10 @@ Plug 'justinmk/vim-sneak'
 
 Plug 'tpope/vim-surround'
 
+Plug 'LnL7/vim-nix'
+
+Plug 'uiiaoo/java-syntax.vim'
+
 call plug#end()
 " }}}
 
@@ -443,6 +447,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
+nnoremap <leader>gd :Gdiff :0<CR>
 " }}}
 
 " Colors and Fonts {{{
