@@ -209,6 +209,8 @@ nnoremap <leader>cso :s/<c-r><c-w>
 nnoremap <leader>ghc :Ghcid <C-R>=expand('%')<cr><cr>
 
 nnoremap <leader>kghc :GhcidKill<cr>
+
+nnoremap <leader>sh :%!stylish-haskell<CR>
 " }}}
 
 " coc.nvim specific config {{{
