@@ -55,6 +55,9 @@
     mosh
     direnv
     lorri
+    # xmonad stuff
+    dmenu
+    haskellPackages.xmobar
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -102,6 +105,17 @@
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "eurosign:e";
   services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.windowManager = {
+    xmonad.enable = true;
+    xmonad.enableContribAndExtras = true;
+    xmonad.extraPackages = haskellPackages: [
+      haskellPackages.xmonad-contrib
+      haskellPackages.xmonad-extras
+      haskellPackages.xmonad
+    ];
+  };
+  services.xserver.displayManager.defaultSession = "none+xmonad";
+
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
