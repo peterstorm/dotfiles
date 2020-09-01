@@ -35,6 +35,23 @@
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
+  systemd.services.xcape = {
+    description = "xcape daemon";
+    after = [ "graphical.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      User = "peterstorm";
+      ExecStart = ''
+        /run/current-system/sw/bin/xcape -e ''\"Hyper_L=Caps_Lock;Hyper_R=backslash''\"
+      '';
+      Restart = "always";
+      Type = "forking";
+      Environment = "DISPLAY=:0";
+      RestartSec = "1";
+    };
+  };
+
+
 
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
@@ -55,6 +72,7 @@
     mosh
     direnv
     lorri
+    xcape
     # xmonad stuff
     dmenu
     haskellPackages.xmobar
@@ -103,8 +121,8 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e";
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.xkbOptions = "caps:none, caps:hyper";
+  # services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.windowManager = {
     xmonad.enable = true;
     xmonad.enableContribAndExtras = true;
