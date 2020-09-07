@@ -8,7 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./cachix.nix
     ];
+
+  ## unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -35,6 +39,11 @@
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
+
+  # enable lorri
+  services.lorri.enable = true;
+
+  # enable xcape mapping to use capslock as hyper key
   systemd.services.xcape = {
     description = "xcape daemon";
     after = [ "graphical.target" ];
@@ -59,24 +68,40 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget
+    # nvim stuff
     (import ./vim.nix)
-    git
-    tmux
     pkgs.python3Packages.pynvim
     pkgs.vimPlugins.vim-plug
-    curl
-    firefox
     nodejs-12_x
-    cachix
-    mosh
+    # browser
+    firefox
+    # nix-shell stuff
     direnv
     lorri
-    xcape
+    cachix
+    # utils
+    mosh
+    git
+    tmux
+    ripgrep
+    unzip
+    wget
+    curl
+    # chat
+    slack
+    discord
     # xmonad stuff
     dmenu
     haskellPackages.xmobar
+    xcape # key-remap
   ];
+
+  environment.interactiveShellInit = ''
+    eval "$(direnv hook bash)"
+    alias m='mosh peterstorm@167.86.86.136'
+    alias n='nvim'
+    alias c='cd /etc/nixos/'
+        '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
