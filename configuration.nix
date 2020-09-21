@@ -60,6 +60,11 @@
     };
   };
 
+  systemd.services.nvidia-control-devices = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
+  };
+
 
 
   # Set your time zone.
@@ -77,9 +82,11 @@
     firefox
     # nix-shell stuff
     direnv
+    niv
     lorri
     cachix
     # utils
+    ffmpeg
     mosh
     git
     tmux
@@ -94,6 +101,11 @@
     dmenu
     haskellPackages.xmobar
     xcape # key-remap
+    # media
+    vlc
+    spotify
+    #cuda
+    cudatoolkit
   ];
 
   environment.interactiveShellInit = ''
@@ -143,11 +155,23 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  # Enable OpenGL - hopefully?
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    setLdLibraryPath = true;
+    extraPackages = with pkgs; [
+      libGL
+      glib
+    ];
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "caps:none, caps:hyper";
-  # services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.windowManager = {
     xmonad.enable = true;
     xmonad.enableContribAndExtras = true;
