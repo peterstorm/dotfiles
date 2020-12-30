@@ -196,16 +196,6 @@ vmap <leader>d "*d
 nmap <leader>p "*p
 vmap <leader>p "*p
 
-" change all occurances of word under cursor
-nnoremap <leader>cao :%s/\<<C-r><C-w>\>//g<Left><Left>
-
-" change some occurances of word under cursor, search again with '/ CTRL-R - then use n and . to redo changes'.
-nnoremap <leader>cso :s/<c-r><c-w>
-
-
-" change some occurances of word under cursor, search again with '/ CTRL-R - then use n and . to redo changes'.
-nnoremap <leader>cso :s/<c-r><c-w>
-
 " }}}
 
 "Haskell Specific {{{
@@ -256,8 +246,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)<CR>
 
 " Formatting selected code.
-xmap <leader>fs  <Plug>(coc-format-selected)<CR>
-nmap <leader>fs  <Plug>(coc-format-selected)<CR>
+" xmap <leader>fs  <Plug>(coc-format-selected)<CR>
+" nmap <leader>fs  <Plug>(coc-format-selected)<CR>
 
 augroup mygroup
   autocmd!
@@ -306,6 +296,10 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 let g:airline#extensions#coc#enabled = 1
+" }}}
+
+" vim sneak {{{
+let g:sneak#label = 1
 " }}}
 
 " denite specific config {{{
