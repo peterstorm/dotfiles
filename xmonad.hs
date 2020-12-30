@@ -190,6 +190,7 @@ xmobarEscape = concatMap doubleLts
 
 wsSys = "sys"
 wsDev = "dev"
+wsChat = "chat"
 
 
 myWorkspaces :: [String]
@@ -228,8 +229,14 @@ projects =
                 , projectDirectory  = "~/"
                 , projectStartHook  = Just $ do spawn myBrowser
                 }
-    ]
+    
+    , Project   { projectName       = "chat"
+                , projectDirectory  = "~/"
+                , projectStartHook  = Just $ do spawnOn wsChat "slack"
+                                                spawnOn wsChat "Discord"
+                }
 
+    ]
 
 myFocusFollowsMouse  = False
 myClickJustFocuses   = True
@@ -731,8 +738,8 @@ myKeys =
         , ("M-<Space>", shellPrompt dtXPConfig)   -- Shell Prompt
 
     -- Windows
-        , ("M-S-c", kill1)                           -- Kill the currently focused client
-        , ("M-S-a", killAll)                         -- Kill all windows on current workspace
+        , ("M-<Backspace>", kill1)                           -- Kill the currently focused client
+        , ("M-S-<Backspace>", killAll)                         -- Kill all windows on current workspace
 
     -- Floating windows
         , ("M-f", sendMessage (T.Toggle "floats"))       -- Toggles my 'floats' layout
@@ -745,9 +752,6 @@ myKeys =
         , ("C-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
         , ("C-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
 
-    -- Tree Select/
-        --, ("C-t t", treeselectAction tsDefaultConfig)
-
     -- Windows navigation
         , ("M-m", windows W.focusMaster)     -- Move focus to the master window
         , ("M-j", windows W.focusDown)       -- Move focus to the next window
@@ -755,7 +759,7 @@ myKeys =
         --, ("M-S-m", windows W.swapMaster)    -- Swap the focused window and the master window
         , ("M-S-j", windows W.swapDown)      -- Swap focused window with next window
         , ("M-S-k", windows W.swapUp)        -- Swap focused window with prev window
-        , ("M-S-m", promote)         -- Moves focused window to master, others maintain order
+        , ("M-S-.", promote)         -- Moves focused window to master, others maintain order
         , ("M1-S-<Tab>", rotSlavesDown)      -- Rotate all windows except master and keep focus in place
         , ("M1-C-<Tab>", rotAllDown)         -- Rotate all the windows in the current stack
         --, ("M-S-s", windows copyToAll)
@@ -773,8 +777,8 @@ myKeys =
         , ("M-S-<KP_Multiply>", increaseLimit)              -- Increase number of windows
         , ("M-S-<KP_Divide>", decreaseLimit)                -- Decrease number of windows
 
-        , ("M-h", sendMessage Shrink)                       -- Shrink horiz window width
-        , ("M-l", sendMessage Expand)                       -- Expand horiz window width
+        , ("C-,", sendMessage Shrink)                       -- Shrink horiz window width
+        , ("C-.", sendMessage Expand)                       -- Expand horiz window width
         , ("M-C-j", sendMessage MirrorShrink)               -- Shrink vert window width
         , ("M-C-k", sendMessage MirrorExpand)               -- Exoand vert window width
 
