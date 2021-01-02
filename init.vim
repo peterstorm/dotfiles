@@ -170,6 +170,7 @@ set mouse=a
 " Use jk as escape
 xnoremap jk <esc>
 inoremap jk <esc>
+vnoremap jk <esc>
 
 " Use spaces instead of tabs
 set expandtab
