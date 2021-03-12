@@ -246,6 +246,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)<CR>
 
+" Organize Imports
+nmap <leader>co :CocCommand editor.action.organizeImport<CR>
+
 " Formatting selected code.
 " xmap <leader>fs  <Plug>(coc-format-selected)<CR>
 " nmap <leader>fs  <Plug>(coc-format-selected)<CR>
@@ -429,7 +432,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
-nnoremap <leader>gd :Gdiff :0<CR>
+"nnoremap <leader>gd :Gdiff :0<CR>
 " }}}
 
 " Colors and Fonts {{{
