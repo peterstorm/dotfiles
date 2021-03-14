@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./cachix.nix
+      #./cachix.nix
     ];
 
   ## unfree packages
@@ -29,6 +29,8 @@
   networking.interfaces.enp6s0.useDHCP = true;
   networking.interfaces.wlp5s0.useDHCP = true;
 
+  # maybe this will enable wifi again?
+  hardware.enableRedistributableFirmware = true;
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -60,13 +62,6 @@
     };
   };
 
-  systemd.services.nvidia-control-devices = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.ExecStart = "${pkgs.linuxPackages.nvidia_x11.bin}/bin/nvidia-smi";
-  };
-
-
-
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
 
@@ -96,6 +91,7 @@
     curl
     # chat
     slack
+    element-desktop
     discord
     # xmonad stuff
     dmenu
@@ -104,8 +100,6 @@
     # media
     vlc
     spotify
-    #cuda
-    cudatoolkit
   ];
 
   environment.interactiveShellInit = ''
@@ -155,18 +149,6 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable OpenGL - hopefully?
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    setLdLibraryPath = true;
-    extraPackages = with pkgs; [
-      libGL
-      glib
-    ];
-  };
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
@@ -203,7 +185,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "20.09"; # Did you read the comment?
 
 }
 
