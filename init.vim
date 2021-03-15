@@ -500,7 +500,7 @@ augroup sourcing
 augroup END
 
 "
-nmap <leader>f :NERDTreeToggle<cr>
+nmap <leader>f :NERDTreeToggle<CR>
 
 " Open file prompt with current path
 nmap <leader>e :e <C-R>=expand("%:p:h") . '/'<CR>

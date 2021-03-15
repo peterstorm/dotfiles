@@ -133,7 +133,6 @@ import XMonad.Util.Cursor
 import XMonad.Util.EZConfig                 -- removeKeys, additionalKeys
 import XMonad.Util.Loggers
 import XMonad.Util.NamedActions
-import XMonad.Util.NamedScratchpad
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run                      -- for spawnPipe and hPutStrLn
 import XMonad.Util.SpawnOnce
@@ -153,10 +152,10 @@ myModMask :: KeyMask
 myModMask = mod4Mask       -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "konsole"   -- Sets default terminal
+myTerminal = "alacritty"   -- Sets default terminal
 
 myBrowser :: String
-myBrowser = "firefox "               -- Sets firefox as browser for tree select
+myBrowser = "firefox -P noscratchpad"               -- Sets firefox as browser for tree select
 -- myBrowser = myTerminal ++ " -e lynx " -- Sets lynx as browser for tree select
 
 myBrowserClass :: String
@@ -191,7 +190,7 @@ xmobarEscape = concatMap doubleLts
 wsSys = "sys"
 wsDev = "dev"
 wsChat = "chat"
-
+wsWww = "www"
 
 myWorkspaces :: [String]
 myWorkspaces = fmap xmobarEscape
@@ -208,8 +207,7 @@ projects =
 
     , Project   { projectName       = "sys"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawnOn wsSys myTerminal
-                                                spawnOn wsSys myTerminal
+                , projectStartHook  = Just $ do spawnOn wsSys myBrowser
                                                 spawnOn wsSys myTerminal
                 }
 
@@ -227,13 +225,15 @@ projects =
 
     , Project   { projectName       = "www"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawn myBrowser
+                , projectStartHook  = Just $ do spawnOn wsWww myBrowser
+                                                spawnOn wsWww myBrowser
                 }
     
     , Project   { projectName       = "chat"
                 , projectDirectory  = "~/"
                 , projectStartHook  = Just $ do spawnOn wsChat "slack"
                                                 spawnOn wsChat "Discord"
+                                                spawnOn wsChat "element-desktop"
                 }
 
     ]
@@ -615,63 +615,35 @@ searchList = [ ("a", archwiki)
              , ("z", S.amazon)
              ]
 
--- TODO: change this to a lookup for all workspaces
-hangoutsCommand     = myBrowser ++ " --app-id=knipolnnllmklapflnccelgolnpehhpl"
-hangoutsTitle       = "Google Hangouts - es@ethanschoonover.com"
-hangoutsPrefix      = "Google Hangouts"
-hangoutsResource    = "crx_nckgahadagoaajjgafhacjanaoiihapd"
-isHangoutsFor s     = (className =? myBrowserClass
-                      <&&> fmap (isPrefixOf hangoutsPrefix) title
-                      <&&> fmap (isInfixOf s) title)
-isPersonalHangouts  = isHangoutsFor "ethanschoonover"
-isWorkHangouts      = isHangoutsFor "eschoonover"
-
--- TODO: change this to a lookup for all workspaces
-trelloCommand       = "dex $HOME/.local/share/applications/Trello.desktop"
-trelloWorkCommand   = "dex $HOME/.local/share/applications/TrelloWork.desktop"
-trelloInfix         = "Trello"
-trelloResource      = "crx_jijnmpkkfkjaihbhffejemnpbbglahim"
-trelloWorkResource  = "crx_fkbbihpadkgbnhphndjgblgelahbiede"
-isTrello            = (resource =? trelloResource)
-isTrelloWork        = (resource =? trelloWorkResource)
-
-googleMusicCommand  = "dex $HOME/.local/share/applications/Music.desktop"
-googleMusicInfix    = "Google Play Music"
-googleMusicResource = "crx_ioljlgoncmlkbcepmminebblkddfjofl"
-isGoogleMusic       = (resource =? googleMusicResource)
-
-plexCommand         = "dex $HOME/.local/share/applications/Plex.desktop"
-plexInfix           = "Plex"
-plexResource        = "crx_fpniocchabmgenibceglhnfeimmdhdfm"
-isPlex              = (resource =? plexResource)
-
-isConsole           = (className =? "Terminator")
-                    <&&> (stringProperty "WM_WINDOW_ROLE" =? "Scratchpad")
-myConsole           = "terminator -T console -p console --role=Scratchpad"
-
-scratchpads =
-    [   (NS "hangoutsPersonal"  hangoutsCommand isPersonalHangouts defaultFloating)
-    ,   (NS "hangoutsWork"  hangoutsCommand isWorkHangouts defaultFloating)
-    ,   (NS "trello"  trelloCommand isTrello nonFloating)
-    ,   (NS "trelloWork"  trelloWorkCommand isTrelloWork nonFloating)
-    ,   (NS "googleMusic"  googleMusicCommand isGoogleMusic nonFloating)
-    ,   (NS "plex"  plexCommand isPlex defaultFloating)
-    ,   (NS "console"  myConsole isConsole nonFloating)
-    ,   (NS "xawtv" "xawtv" (resource =? "xawtv") (customFloating $ W.RationalRect (2/3) (1/6) (1/5) (1/3)) )
+myScratchpads :: [NamedScratchpad]
+myScratchpads =
+    [   (NS "term" spawnTerm findTerm manageTerm)
+    ,   (NS "fox" spawnFox findFox manageFox)
     ] 
+  where
+    spawnTerm = myTerminal ++ " -t scratchpad"
+    findTerm = title =? "scratchpad"
+    manageTerm = customFloating $ W.RationalRect l t w h
+               where
+                 h = (4/6)
+                 w = (4/6)
+                 t = (1/5)
+                 l = 0.315
+    spawnFox = "firefox -P scratchpad --class foxpad"
+    findFox = className =? "foxpad"
+    manageFox = customFloating $ W.RationalRect l t w h
+               where
+                 h = (4/6)
+                 w = (4/6)
+                 t = (1/5)
+                 l = 0.315
 
 
 myHandleEventHook = docksEventHook
                 <+> fadeWindowsEventHook
-                <+> dynamicTitle myDynHook
                 <+> handleEventHook def
                 <+> XMonad.Layout.Fullscreen.fullscreenEventHook
-    where
-        myDynHook = composeAll
-            [ isPersonalHangouts --> forceCenterFloat
-            , isWorkHangouts --> insertPosition End Newer
-            ]
-
+ 
 forceCenterFloat :: ManageHook
 forceCenterFloat = doFloatDep move
   where
@@ -686,39 +658,11 @@ forceCenterFloat = doFloatDep move
 
 myManageHook :: ManageHook
 myManageHook =
-        manageSpecific
-    <+> manageDocks
-    <+> namedScratchpadManageHook scratchpads
+        manageDocks
+    <+> namedScratchpadManageHook myScratchpads
     <+> fullscreenManageHook
     <+> manageSpawn
-    where
-        manageSpecific = composeOne
-            [ resource =? "desktop_window" -?> doIgnore
-            , resource =? "stalonetray"    -?> doIgnore
-            , resource =? "vlc"    -?> doFloat
-            , resource =? trelloResource -?> doFullFloat
-            , resource =? trelloWorkResource -?> doFullFloat
-            , resource =? googleMusicResource -?> doFullFloat
-            , resource =? plexResource -?> doCenterFloat
-            , resource =? hangoutsResource -?> insertPosition End Newer
-            , transience
-            , isBrowserDialog -?> forceCenterFloat
-            --, isConsole -?> forceCenterFloat
-            , isRole =? gtkFile  -?> forceCenterFloat
-            , isDialog -?> doCenterFloat
-            , isRole =? "pop-up" -?> doCenterFloat
-            , isInProperty "_NET_WM_WINDOW_TYPE"
-                           "_NET_WM_WINDOW_TYPE_SPLASH" -?> doCenterFloat
-            , resource =? "console" -?> tileBelowNoFocus
-            , isFullscreen -?> doFullFloat
-            , pure True -?> tileBelow ]
-        isBrowserDialog = isDialog <&&> className =? myBrowserClass
-        gtkFile = "GtkFileChooserDialog"
-        isRole = stringProperty "WM_WINDOW_ROLE"
-        -- insert WHERE and focus WHAT
-        tileBelow = insertPosition Below Newer
-        tileBelowNoFocus = insertPosition Below Older
-
+  
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
     where fadeAmount = 1.0
@@ -745,6 +689,10 @@ myKeys =
         , ("M-f", sendMessage (T.Toggle "floats"))       -- Toggles my 'floats' layout
         , ("M-<Delete>", withFocused $ windows . W.sink) -- Push floating window back to tile
         , ("M-S-<Delete>", sinkAll)                      -- Push ALL floating windows to tile
+
+    -- Scratchpads
+        , ("M-S-x", namedScratchpadAction myScratchpads "term")
+        , ("M-x", namedScratchpadAction myScratchpads "fox")
 
     -- Grid Select (CTRL-g followed by a key)
         , ("C-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
