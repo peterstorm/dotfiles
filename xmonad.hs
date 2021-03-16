@@ -625,17 +625,17 @@ myScratchpads =
     findTerm = title =? "scratchpad"
     manageTerm = customFloating $ W.RationalRect l t w h
                where
-                 h = (4/6)
+                 h = (5/6)
                  w = (4/6)
-                 t = (1/5)
+                 t = 0.08
                  l = 0.315
     spawnFox = "firefox -P scratchpad --class foxpad"
     findFox = className =? "foxpad"
     manageFox = customFloating $ W.RationalRect l t w h
                where
-                 h = (4/6)
+                 h = (5/6)
                  w = (4/6)
-                 t = (1/5)
+                 t = 0.08
                  l = 0.315
 
 
