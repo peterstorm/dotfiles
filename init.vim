@@ -15,6 +15,10 @@ Plug 'derekwyatt/vim-scala'
 
 Plug 'jelera/vim-javascript-syntax'
 
+Plug 'leafgarland/typescript-vim'
+
+Plug 'peitalin/vim-jsx-typescript'
+
 Plug 'Shougo/denite.nvim'
 
 Plug 'vim-airline/vim-airline'
