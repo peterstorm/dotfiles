@@ -31,7 +31,7 @@ Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'scrooloose/nerdtree'
+Plug 'lambdalisue/fern.vim'
 
 Plug 'pbrisbin/vim-syntax-shakespeare'
 
@@ -212,6 +212,10 @@ nnoremap <leader>kghc :GhcidKill<cr>
 
 nnoremap <leader>sh :%!stylish-haskell<CR>
 " }}}
+
+"Fern Specific {{{
+nmap <leader>f :Fern . -reveal=%<CR>
+"}}}
 
 " coc.nvim specific config {{{
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -502,9 +506,6 @@ augroup sourcing
     autocmd bufwritepost .vimrc source $MYVIMRC
   endif
 augroup END
-
-"
-nmap <leader>f :NERDTreeToggle<CR>
 
 " Open file prompt with current path
 nmap <leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
