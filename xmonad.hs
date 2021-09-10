@@ -56,6 +56,7 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks             -- avoid xmobar
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.DynamicBars
 
     -- Layouts
 import XMonad.Layout.GridVariants (Grid(Grid))
@@ -374,7 +375,7 @@ myLayoutHook = showWorkspaceName
              $ fullBarToggle
              $ mirrorToggle
              $ reflectToggle
-             $ flex ||| tabs
+             $ flex ||| tabs ||| tall ||| threeCol
   where
 
 --    testTall = Tall 1 (1/50) (2/3)
@@ -406,6 +407,12 @@ myLayoutHook = showWorkspaceName
     --------------------------------------------------------------------------
     -- Tabs Layout                                                          --
     --------------------------------------------------------------------------
+    tall = named "Stacks"
+         $ avoidStruts
+         $ addTopBar
+         $ myGaps
+         $ mySpacing
+         $ Mirror $ Tall 2 (3/100) (1/2)
 
     threeCol = named "Unflexed"
          $ avoidStruts
@@ -788,6 +795,7 @@ main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
     xmproc0 <- spawnPipe "xmobar -x 0 /home/peterstorm/.config/xmobar/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 1 /home/peterstorm/.config/xmobar/xmobarrc1"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ dynamicProjects projects
            $ withNavigation2DConfig myNav2DConf
@@ -807,7 +815,7 @@ main = do
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusedBorderColor
         , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        { ppOutput = \x -> hPutStrLn xmproc0 x
+                        { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
                         , ppCurrent = xmobarColor "#c3e88d" "" . wrap "[" "]" -- Current workspace in xmobar
                         , ppVisible = xmobarColor "#c3e88d" ""                -- Visible but not current workspace
                         , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""   -- Hidden workspaces in xmobar

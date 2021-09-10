@@ -35,6 +35,9 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # enable bluetooth
+  hardware.bluetooth.enable = true;
+
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
@@ -44,6 +47,9 @@
 
   # enable lorri
   services.lorri.enable = true;
+
+  # enable docker
+  virtualisation.docker.enable = true;
 
   # enable xcape mapping to use capslock as hyper key
   systemd.services.xcape = {
@@ -73,6 +79,8 @@
     pkgs.python3Packages.pynvim
     pkgs.vimPlugins.vim-plug
     nodejs-12_x
+    # terminal
+    alacritty
     # browser
     firefox
     # nix-shell stuff
@@ -81,14 +89,22 @@
     lorri
     cachix
     # utils
+    autorandr
     ffmpeg
+    glances
     mosh
     git
+    gitAndTools.gh
+    starship
     tmux
     ripgrep
     unzip
     wget
     curl
+    kube3d
+    kubectl
+    kubernetes-helm
+    skaffold
     # chat
     slack
     element-desktop
@@ -104,9 +120,12 @@
 
   environment.interactiveShellInit = ''
     eval "$(direnv hook bash)"
+    eval "$(starship init bash)"
     alias m='mosh peterstorm@167.86.86.136'
     alias n='nvim'
     alias c='cd /etc/nixos/'
+    alias k='k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer --image rancher/k3s:v1.21.0-k3s1'
+    alias kc='export KUBECONFIG="$(k3d kubeconfig write dev)"'
         '';
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -176,7 +195,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.peterstorm = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   # This value determines the NixOS release from which the default
@@ -185,7 +204,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "21.05"; # Did you read the comment?
 
 }
 
