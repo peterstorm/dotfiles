@@ -208,33 +208,27 @@ projects =
 
     , Project   { projectName       = "sys"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawnOn wsSys myBrowser
-                                                spawnOn wsSys myTerminal
+                , projectStartHook  = Nothing
                 }
 
     , Project   { projectName       = "mon"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do runInTerm "-name glances" "glances"
+                , projectStartHook  = Nothing
                 }
 
     , Project   { projectName       = "dev"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawnOn wsDev myTerminal
-                                                spawnOn wsDev myTerminal
-                                                spawnOn wsDev myTerminal
+                , projectStartHook  = Nothing
                 }
 
     , Project   { projectName       = "www"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawnOn wsWww myBrowser
-                                                spawnOn wsWww myBrowser
+                , projectStartHook  = Nothing
                 }
     
     , Project   { projectName       = "chat"
                 , projectDirectory  = "~/"
-                , projectStartHook  = Just $ do spawnOn wsChat "slack"
-                                                spawnOn wsChat "Discord"
-                                                spawnOn wsChat "element-desktop"
+                , projectStartHook  = Nothing
                 }
 
     ]
@@ -375,7 +369,7 @@ myLayoutHook = showWorkspaceName
              $ fullBarToggle
              $ mirrorToggle
              $ reflectToggle
-             $ flex ||| tabs ||| tall ||| threeCol
+             $ flex ||| tabs ||| stacks ||| threeCol
   where
 
 --    testTall = Tall 1 (1/50) (2/3)
@@ -407,19 +401,19 @@ myLayoutHook = showWorkspaceName
     --------------------------------------------------------------------------
     -- Tabs Layout                                                          --
     --------------------------------------------------------------------------
-    tall = named "Stacks"
+    stacks = named "Stacks"
          $ avoidStruts
          $ addTopBar
          $ myGaps
          $ mySpacing
-         $ Mirror $ Tall 2 (3/100) (1/2)
+         $ Tall 2 (3/100) (1/2)
 
     threeCol = named "Unflexed"
          $ avoidStruts
          $ addTopBar
          $ myGaps
          $ mySpacing
-         $ ThreeColMid 1 (1/10) (1/2)
+         $ Mirror $ ThreeColMid 1 (1/10) (1/2)
 
     tabs = named "Tabs"
          $ avoidStruts
